@@ -3,198 +3,380 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="GisGO — droneopgaver, visuel dokumentation og kort. Certificeret A1/A3 + A2." />
 
-  <title>GisGO — Droneopgaver</title>
+  <title>GisGO — Droneopgaver & dokumentation</title>
 
   <style>
     :root{
-      --bg: #f6f7f6;
+      /* Farver inspireret af logoet (navy/teal/grå) */
+      --bg: #f5f7f9;
       --card: #ffffff;
-      --text: #1f2a2a;
-      --muted: #6b7a7a;
-      --line: #e4e8e7;
-      --accent: #8fb6b2; /* blød grøn/blå */
-      --accent2: #d8cfc4; /* varm beige */
+      --text: #0f2233;
+      --muted: #4f6272;
+      --line: #e3e8ee;
 
-      --radius: 14px;
-      --max: 900px;
+      --navy: #0f2233;
+      --teal: #2b6f84;
+      --tealSoft: rgba(43,111,132,0.10);
 
-      --font: system-ui, -apple-system, BlinkMacSystemFont,
-              "Segoe UI", Roboto, Helvetica, Arial;
+      --radius: 16px;
+      --shadow: 0 18px 55px rgba(15,34,51,0.10);
+
+      --max: 980px;
+      --pad: 22px;
+
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
     *{ box-sizing: border-box; }
-
     body{
       margin: 0;
       font-family: var(--font);
       color: var(--text);
-      background: linear-gradient(
-        180deg,
-        var(--bg),
-        #ffffff
-      );
+      background: radial-gradient(900px 500px at 20% 0%, rgba(43,111,132,0.12), transparent 55%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(15,34,51,0.08), transparent 55%),
+                  var(--bg);
       line-height: 1.6;
     }
 
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+
     header{
-      padding: 32px 20px 16px;
+      padding: 28px 0 18px;
     }
 
-    main{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 20px 60px;
+    .top{
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 16px;
     }
 
-    h1{
-      font-size: 28px;
-      font-weight: 600;
-      margin: 0 0 8px;
+    .brand{
+      display:flex; align-items:center; gap: 14px;
+      min-width: 240px;
     }
 
-    h2{
-      font-size: 20px;
-      font-weight: 600;
-      margin: 0 0 8px;
+    .brand img{
+      width: 54px; height: 54px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 10px 30px rgba(15,34,51,0.08);
+      padding: 6px;
     }
 
-    p{
-      margin: 0 0 14px;
+    .brand .name{
+      font-weight: 650;
+      letter-spacing: 0.2px;
+      font-size: 18px;
+      margin: 0;
+    }
+    .brand .sub{
+      margin: 2px 0 0;
       color: var(--muted);
-      max-width: 60ch;
+      font-size: 13px;
+    }
+
+    nav{
+      display:flex; gap: 14px; flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    nav a{
+      font-size: 14px;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 12px;
+    }
+    nav a:hover{
+      color: var(--text);
+      background: rgba(255,255,255,0.65);
+      border: 1px solid var(--line);
+      text-decoration: none;
+    }
+
+    .hero{
+      padding: 26px 0 10px;
+    }
+
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+    @media (max-width: 880px){
+      .heroGrid{ grid-template-columns: 1fr; }
+      nav{ justify-content: flex-start; }
     }
 
     .card{
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: var(--radius);
+      box-shadow: var(--shadow);
       padding: 20px;
-      margin-bottom: 20px;
     }
 
-    .soft{
-      background: linear-gradient(
-        135deg,
-        rgba(143,182,178,0.18),
-        rgba(216,207,196,0.18)
-      );
+    h1{
+      margin: 0 0 10px;
+      font-size: clamp(26px, 3.2vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.4px;
     }
 
-    .tag{
-      display: inline-block;
-      padding: 6px 10px;
+    .lead{
+      margin: 0 0 16px;
+      color: var(--muted);
+      max-width: 62ch;
+      font-size: 16px;
+    }
+
+    .actions{
+      display:flex; gap: 12px; flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .btn.primary{
+      border-color: rgba(43,111,132,0.28);
+      background: linear-gradient(135deg, rgba(43,111,132,0.12), rgba(43,111,132,0.06));
+      color: var(--navy);
+    }
+    .btn.primary:hover{ filter: brightness(0.99); }
+
+    .badgeRow{
+      display:flex; gap: 8px; flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .badge{
+      border: 1px solid rgba(43,111,132,0.22);
+      background: var(--tealSoft);
+      color: var(--navy);
+      padding: 7px 10px;
       border-radius: 999px;
-      background: rgba(143,182,178,0.25);
-      color: #355a57;
       font-size: 13px;
-      margin-right: 6px;
-      margin-bottom: 6px;
+      font-weight: 560;
     }
+
+    section{
+      padding: 14px 0;
+    }
+
+    h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -0.1px;
+    }
+
+    .list{
+      display:grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .item{
+      display:flex; gap: 10px;
+      align-items:flex-start;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.70);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .dot{
+      width: 10px; height: 10px;
+      border-radius: 99px;
+      background: var(--teal);
+      margin-top: 6px;
+      flex: 0 0 auto;
+    }
+
+    .item b{ display:block; font-size: 14px; }
+    .item span{ display:block; color: var(--muted); font-size: 13px; margin-top: 2px; }
+
+    .sideNote{
+      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+    }
+    .sideNote p{ margin: 0; color: var(--muted); font-size: 14px; }
 
     .contact{
-      border-left: 4px solid var(--accent);
+      border-left: 4px solid var(--teal);
     }
-
-    a{
-      color: #355a57;
+    .contact p{ margin: 0 0 10px; color: var(--muted); }
+    .contact a{
+      display:inline-block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-weight: 650;
       text-decoration: none;
-      font-weight: 500;
     }
-
-    a:hover{
-      text-decoration: underline;
+    .contact a:hover{
+      border-color: rgba(43,111,132,0.35);
+      background: rgba(43,111,132,0.06);
     }
 
     footer{
-      border-top: 1px solid var(--line);
-      padding: 20px;
-      font-size: 13px;
+      padding: 26px 0 36px;
       color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--line);
+      margin-top: 18px;
     }
   </style>
 </head>
 
 <body>
+  <header>
+    <div class="wrap">
+      <div class="top">
+        <div class="brand">
+          <!-- Læg dit logo i repo'et som "logo.png" -->
+          <img src="logo.png" alt="GisGO logo" />
+          <div>
+            <p class="name">GisGO</p>
+            <p class="sub">Droneopgaver • dokumentation • kort</p>
+          </div>
+        </div>
 
-<header>
-  <main>
-    <h1>GisGO</h1>
-    <p>
-      Jeg laver små droneopgaver – billeder, video og enkel dokumentation.
-    </p>
+        <nav aria-label="Navigation">
+          <a href="#ydelser">Ydelser</a>
+          <a href="#rammer">Rammer</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <div class="heroGrid">
+        <div class="card">
+          <h1>Droneoptagelser og dokumentation — med et professionelt workflow.</h1>
+          <p class="lead">
+            Jeg hjælper med droneopgaver, når du har brug for et klart visuelt overblik — til dokumentation, formidling eller kort.
+          </p>
+
+          <div class="actions">
+            <!-- TODO: skift mailen til din rigtige -->
+            <a class="btn primary" href="#kontakt">Kontakt</a>
+            <a class="btn" href="#ydelser">Se ydelser</a>
+          </div>
+
+          <div class="badgeRow">
+            <span class="badge">A1/A3 + A2 certificeret</span>
+            <span class="badge">København & omegn</span>
+            <span class="badge">Foto • video • kort</span>
+          </div>
+        </div>
+
+        <aside class="card sideNote">
+          <h2 style="margin-top:0;">Kort fortalt</h2>
+          <ul class="list">
+            <li class="item">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <b>Plan → flyvning → levering</b>
+                <span>Struktur fra start, så du får det materiale du skal bruge.</span>
+              </div>
+            </li>
+            <li class="item">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <b>Rolig og seriøs tilgang</b>
+                <span>Fokus på sikkerhed, rammer og et ensartet visuelt udtryk.</span>
+              </div>
+            </li>
+            <li class="item">
+              <span class="dot" aria-hidden="true"></span>
+              <div>
+                <b>Levering i praktiske formater</b>
+                <span>Billeder/video + evt. kort/PDF efter aftale.</span>
+              </div>
+            </li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+
+    <section id="ydelser">
+      <div class="card">
+        <h2>Ydelser</h2>
+        <ul class="list">
+          <li class="item">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+              <b>Visuel dokumentation</b>
+              <span>Oversigtsbilleder, status og før/efter (efter aftale).</span>
+            </div>
+          </li>
+          <li class="item">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+              <b>Inspektion (visuel)</b>
+              <span>Fx tag, facade, solceller og svært tilgængelige områder.</span>
+            </div>
+          </li>
+          <li class="item">
+            <span class="dot" aria-hidden="true"></span>
+            <div>
+              <b>Kort og formidling</b>
+              <span>Enkel kortproduktion/overblik, hvis materialet skal bruges i praksis.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="rammer">
+      <div class="card">
+        <h2>Rammer</h2>
+        <p class="lead" style="margin-bottom:0;">
+          Jeg er certificeret i <b>A1/A3</b> og <b>A2</b> og flyver inden for gældende regler.
+          Opgaver vurderes altid ift. lokation, sikkerhed og rammer.
+        </p>
+      </div>
+    </section>
+
+    <section id="kontakt">
+      <div class="card contact">
+        <h2>Kontakt</h2>
+        <p>
+          Hvis du har en droneopgave, kan du skrive kort om <b>sted</b>, <b>formål</b> og <b>deadline</b> — så vender jeg tilbage.
+        </p>
+
+        <!-- TODO: skift mailen til din rigtige -->
+        <a href="mailto:dinmail@eksempel.dk?subject=Droneopgave%20—%20GisGO">dinmail@eksempel.dk</a>
+
+        <p style="margin-top:12px; font-size:13px;">
+          (CVR er ikke oprettet endnu.)
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> GisGO
+    </footer>
   </main>
-</header>
 
-<main>
-
-  <section class="card soft">
-    <p>
-      Jeg er i gang med at starte noget småt op og tager løbende droneopgaver,
-      hvis det giver mening for både dig og mig.
-    </p>
-    <p>
-      Hvis du har en opgave og er i tvivl om, hvad du egentlig har brug for,
-      er du meget velkommen til bare at skrive.
-    </p>
-  </section>
-
-  <section class="card">
-    <h2>Hvad jeg kan hjælpe med</h2>
-    <p>
-      Det kan fx være:
-    </p>
-
-    <span class="tag">Status- og oversigtsbilleder</span>
-    <span class="tag">Små videooptagelser</span>
-    <span class="tag">Dokumentation af områder</span>
-    <span class="tag">Simple kort / overblik</span>
-    <span class="tag">Natur og omgivelser</span>
-
-    <p style="margin-top:14px;">
-      Jeg siger også gerne nej, hvis jeg ikke er den rigtige til opgaven.
-    </p>
-  </section>
-
-  <section class="card">
-    <h2>Drone & rammer</h2>
-    <p>
-      Jeg er certificeret i <strong>A1/A3</strong> og <strong>A2</strong>
-      og flyver inden for gældende regler og med fokus på sikkerhed.
-    </p>
-    <p>
-      Lige nu er det et lille setup uden CVR – derfor tager jeg kun opgaver,
-      som passer til det.
-    </p>
-  </section>
-
-  <section class="card contact">
-    <h2>Kontakt</h2>
-    <p>
-      Hvis du har en droneopgave – stor eller lille – kan du skrive til mig her:
-    </p>
-
-    <p>
-      📧 <a href="mailto:dinmail@eksempel.dk">dinmail@eksempel.dk</a>
-    </p>
-
-    <p style="margin-top:10px;">
-      Du behøver ikke have det hele formuleret – bare skriv lidt om stedet
-      og hvad du tænker.
-    </p>
-  </section>
-
-</main>
-
-<footer>
-  <main>
-    © <span id="year"></span> GisGO
-  </main>
-</footer>
-
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
-
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
