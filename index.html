@@ -1,1 +1,846 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="GisGO Drone — professionelle droneopgaver i København og omegn. Inspektion, dokumentation, kortlægning og billeder/video. A1/A3 + A2 certificeret." />
+  <meta name="theme-color" content="#0B0F14" />
 
+  <title>GisGO Drone — Droneopgaver, dokumentation & kortlægning</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="GisGO Drone — Droneopgaver, dokumentation & kortlægning" />
+  <meta property="og:description" content="Professionelle droneopgaver i København og omegn. A1/A3 + A2 certificeret." />
+  <meta property="og:type" content="website" />
+  <!-- TODO: Når du har et share-billede, upload det og indsæt URL her -->
+  <meta property="og:image" content="" />
+
+  <!-- Favicon (valgfrit) -->
+  <!-- TODO: Upload en favicon og udfyld her -->
+  <!-- <link rel="icon" href="favicon.png" /> -->
+
+  <style>
+    :root{
+      --bg: #07090C;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.68);
+      --faint: rgba(255,255,255,0.45);
+      --line: rgba(255,255,255,0.12);
+
+      --accent: #BFA37A;       /* varm, luksus */
+      --accent2: #8FB6B2;      /* kølig, rolig */
+      --danger: #E07A7A;
+
+      --shadow: 0 24px 70px rgba(0,0,0,0.45);
+      --radius: 18px;
+      --radius2: 28px;
+
+      --max: 1100px;
+      --pad: clamp(18px, 3.2vw, 30px);
+
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      *{ scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(1100px 600px at 75% 10%, rgba(191,163,122,0.14), transparent 55%),
+        radial-gradient(900px 500px at 15% 20%, rgba(143,182,178,0.12), transparent 55%),
+        radial-gradient(700px 500px at 50% 100%, rgba(255,255,255,0.06), transparent 55%),
+        var(--bg);
+      line-height: 1.55;
+      letter-spacing: 0.2px;
+      scroll-behavior: smooth;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    .container{ width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+
+    /* Topbar */
+    .topbar{
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(7,9,12,0.55);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-inner{
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0;
+      gap: 14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap: 10px;
+      font-weight: 640;
+      letter-spacing: 0.4px;
+    }
+    .logo{
+      width: 34px; height: 34px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(191,163,122,0.9), rgba(143,182,178,0.85));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+      position: relative;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset: 7px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.25);
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.65), rgba(255,255,255,0.08));
+      mix-blend-mode: overlay;
+    }
+    nav{ display:flex; align-items:center; gap: 10px; }
+    .navlink{
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: var(--muted);
+      border: 1px solid transparent;
+    }
+    .navlink:hover{
+      color: var(--text);
+      border-color: rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+    }
+    .cta{
+      display:flex; align-items:center; gap: 10px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 11px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-weight: 600;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+    }
+    .btn:hover{ background: rgba(255,255,255,0.09); }
+    .btn.primary{
+      border-color: rgba(191,163,122,0.45);
+      background: linear-gradient(135deg, rgba(191,163,122,0.22), rgba(143,182,178,0.14));
+    }
+    .btn.primary:hover{ filter: brightness(1.05); }
+
+    /* Mobile menu */
+    .menu-btn{
+      display:none;
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+    }
+    .menu{
+      display:none;
+      padding: 10px 0 18px;
+      border-top: 1px solid var(--line);
+    }
+    .menu a{ display:block; padding: 12px 0; color: var(--muted); }
+    .menu a:hover{ color: var(--text); }
+
+    @media (max-width: 860px){
+      nav, .cta{ display:none; }
+      .menu-btn{ display:inline-flex; align-items:center; justify-content:center; }
+      .menu.open{ display:block; }
+    }
+
+    /* Hero */
+    .hero{
+      padding: clamp(44px, 6vw, 72px) 0 26px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: clamp(16px, 3vw, 28px);
+      align-items: stretch;
+    }
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns: 1fr; }
+    }
+    .kicker{
+      display:inline-flex; align-items:center; gap: 10px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      width: fit-content;
+    }
+    .dot{
+      width: 10px; height: 10px; border-radius: 99px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(191,163,122,0.12);
+    }
+    h1{
+      font-size: clamp(34px, 4.6vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -0.6px;
+      margin: 14px 0 14px;
+    }
+    .sub{
+      color: var(--muted);
+      font-size: clamp(16px, 1.6vw, 18px);
+      max-width: 58ch;
+      margin: 0 0 18px;
+    }
+    .hero-actions{
+      display:flex; gap: 12px; flex-wrap: wrap;
+      margin: 18px 0 14px;
+    }
+    .trust{
+      display:flex; gap: 10px; flex-wrap: wrap;
+      margin-top: 14px;
+      color: var(--faint);
+      font-size: 13px;
+    }
+    .pill{
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.035);
+      padding: 8px 10px;
+      border-radius: 999px;
+    }
+
+    .hero-card{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position: relative;
+      min-height: 320px;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 300px at 70% 20%, rgba(191,163,122,0.22), transparent 60%),
+                  radial-gradient(600px 300px at 25% 80%, rgba(143,182,178,0.18), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-card-inner{
+      position: relative;
+      padding: 18px;
+      display:flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 12px;
+    }
+    .statgrid{
+      display:grid; grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: auto;
+    }
+    .stat{
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+    }
+    .stat b{ display:block; font-size: 15px; }
+    .stat span{ color: var(--muted); font-size: 13px; }
+
+    .badge{
+      display:flex; align-items:center; justify-content: space-between;
+      gap: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(0,0,0,0.16);
+    }
+    .badge small{ color: var(--muted); display:block; margin-top: 2px; }
+    .badge .tag{
+      font-size: 12px; color: rgba(0,0,0,0.85);
+      background: rgba(191,163,122,0.95);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+    }
+
+    /* Sections */
+    section{ padding: 44px 0; }
+    .section-head{
+      display:flex; align-items:flex-end; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    h2{
+      margin: 0;
+      font-size: clamp(22px, 2.4vw, 28px);
+      letter-spacing: -0.3px;
+    }
+    .lead{
+      margin: 0;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 920px){
+      .grid3{ grid-template-columns: 1fr; }
+    }
+    .card{
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.045);
+      padding: 18px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.28);
+      position: relative;
+      overflow:hidden;
+    }
+    .card:after{
+      content:"";
+      position:absolute; inset:-1px;
+      background: radial-gradient(450px 220px at 20% 10%, rgba(255,255,255,0.06), transparent 55%);
+      pointer-events:none;
+    }
+    .card > *{ position: relative; }
+    .card h3{ margin: 0 0 6px; font-size: 16px; letter-spacing: -0.1px; }
+    .card p{ margin: 0; color: var(--muted); }
+    .mini{
+      margin-top: 10px;
+      display:flex; flex-wrap: wrap; gap: 8px;
+    }
+    .chip{
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.03);
+      border-radius: 999px;
+      padding: 6px 9px;
+      color: var(--faint);
+    }
+
+    /* Process */
+    .steps{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    @media (max-width: 920px){ .steps{ grid-template-columns: 1fr; } }
+    .step{
+      display:flex; gap: 12px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      padding: 16px;
+    }
+    .num{
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      background: rgba(191,163,122,0.18);
+      border: 1px solid rgba(191,163,122,0.28);
+      display:flex; align-items:center; justify-content:center;
+      font-weight: 800;
+      color: var(--text);
+      flex: 0 0 auto;
+    }
+    .step p{ margin: 0; color: var(--muted); }
+    .step b{ display:block; margin-bottom: 4px; }
+
+    /* Portfolio */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .ph{
+      border-radius: var(--radius);
+      border: 1px dashed rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.03);
+      padding: 16px;
+      min-height: 160px;
+      grid-column: span 4;
+      position: relative;
+      overflow:hidden;
+    }
+    .ph strong{ display:block; margin-bottom: 6px; }
+    .ph span{ color: var(--muted); font-size: 13px; }
+    @media (max-width: 980px){
+      .ph{ grid-column: span 6; }
+    }
+    @media (max-width: 640px){
+      .ph{ grid-column: span 12; }
+    }
+
+    /* Contact */
+    .contact{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.035));
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display:grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 16px;
+      align-items:start;
+    }
+    @media (max-width: 900px){
+      .contact{ grid-template-columns: 1fr; }
+    }
+    .contact p{ margin: 10px 0 0; color: var(--muted); }
+    form{
+      display:grid;
+      gap: 10px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.18);
+      padding: 14px;
+    }
+    label{ font-size: 12px; color: var(--faint); }
+    input, textarea{
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font: inherit;
+      outline: none;
+    }
+    textarea{ min-height: 110px; resize: vertical; }
+    input:focus, textarea:focus{ border-color: rgba(191,163,122,0.45); }
+    .fine{
+      font-size: 12px;
+      color: var(--faint);
+      margin-top: 10px;
+    }
+
+    footer{
+      padding: 26px 0 40px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      color: var(--faint);
+      font-size: 13px;
+    }
+    .foot{
+      display:flex; gap: 12px; justify-content: space-between; flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Reveal */
+    .reveal{
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 600ms ease, transform 600ms ease;
+    }
+    .reveal.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+
+  <!-- Struktur-data (valgfrit) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"GisGO Drone",
+    "description":"Droneopgaver, dokumentation, inspektion og kortlægning. A1/A3 + A2 certificeret.",
+    "areaServed":"København og omegn",
+    "url":""
+  }
+  </script>
+</head>
+
+<body>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <a class="brand" href="#top">
+          <span class="logo" aria-hidden="true"></span>
+          <span>GisGO <span style="color:var(--faint);font-weight:600;">Drone</span></span>
+        </a>
+
+        <button class="menu-btn" id="menuBtn" aria-label="Åbn menu" aria-expanded="false">
+          ☰
+        </button>
+
+        <nav aria-label="Primær navigation">
+          <a class="navlink" href="#services">Ydelser</a>
+          <a class="navlink" href="#process">Proces</a>
+          <a class="navlink" href="#portfolio">Cases</a>
+          <a class="navlink" href="#about">Om</a>
+          <a class="navlink" href="#contact">Kontakt</a>
+        </nav>
+
+        <div class="cta">
+          <!-- TODO: indsæt din mail -->
+          <a class="btn" href="mailto:dinmail@eksempel.dk?subject=Droneopgave%20—%20GisGO">Mail</a>
+          <a class="btn primary" href="#contact">Få et tilbud</a>
+        </div>
+      </div>
+
+      <div class="menu" id="menu">
+        <a href="#services">Ydelser</a>
+        <a href="#process">Proces</a>
+        <a href="#portfolio">Cases</a>
+        <a href="#about">Om</a>
+        <a href="#contact">Kontakt</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top" class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="reveal">
+          <div class="kicker"><span class="dot" aria-hidden="true"></span>Droneopgaver • Dokumentation • Kortlægning</div>
+          <h1>Smukke, præcise droneoptagelser — og data du kan bruge.</h1>
+          <p class="sub">
+            Jeg hjælper private, virksomheder og foreninger med <b>dokumentation</b>, <b>inspektion</b> og
+            <b>kort- og GIS-relaterede leverancer</b>. Jeg er certificeret i <b>A1/A3</b> og <b>A2</b> og arbejder sikkert og struktureret.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact">Beskriv opgaven</a>
+            <a class="btn" href="#services">Se ydelser</a>
+          </div>
+
+          <div class="trust">
+            <span class="pill">✅ A1/A3 + A2 certificeret</span>
+            <span class="pill">✅ Fokus på sikkerhed & planlægning</span>
+            <span class="pill">✅ Levering i et format du kan bruge</span>
+          </div>
+        </div>
+
+        <aside class="hero-card reveal" aria-label="Hurtigt overblik">
+          <div class="hero-card-inner">
+            <div class="badge">
+              <div>
+                <b>Tilgængelig til opgaver</b>
+                <small>København & omegn (og efter aftale)</small>
+              </div>
+              <span class="tag">A2</span>
+            </div>
+
+            <div class="badge">
+              <div>
+                <b>Leverancer</b>
+                <small>Billeder, video, rapport, kort / GIS-output</small>
+              </div>
+              <span class="tag" style="background: rgba(143,182,178,0.95);">GIS</span>
+            </div>
+
+            <div class="statgrid">
+              <div class="stat">
+                <b>Tryg proces</b>
+                <span>Plan → Flyvning → Levering</span>
+              </div>
+              <div class="stat">
+                <b>Hurtig respons</b>
+                <span>Typisk svar samme dag</span>
+              </div>
+              <div class="stat">
+                <b>Stramt look</b>
+                <span>Redigeret, ensartet finish</span>
+              </div>
+              <div class="stat">
+                <b>Fleksibelt</b>
+                <span>Små opgaver velkomne</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <h2>Ydelser</h2>
+          <p class="lead">Vælg en retning — eller skriv hvad du har brug for. Jeg kan kombinere foto/video med kort/GIS afhængigt af opgaven.</p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <article class="card reveal">
+          <h3>Dokumentation & statusbilleder</h3>
+          <p>Få overblik over et område, en byggeplads, en event eller et projekt — med klare billeder fra faste vinkler.</p>
+          <div class="mini">
+            <span class="chip">Før/efter</span><span class="chip">Serier over tid</span><span class="chip">Leveres i mappe</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <h3>Inspektion (visuel)</h3>
+          <p>Tag et kig på tage, facader, solceller, mindre konstruktioner og svært tilgængelige områder — uden stillads.</p>
+          <div class="mini">
+            <span class="chip">Sikkerheds-fokus</span><span class="chip">Detaljebilleder</span><span class="chip">Kort rapport</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <h3>Kort & simple GIS-leverancer</h3>
+          <p>Når billeder skal blive til noget brugbart: oversigtskort, markeringer, rute/areal, simple analyser og præsentation.</p>
+          <div class="mini">
+            <span class="chip">Kort-PDF</span><span class="chip">Koordinater</span><span class="chip">Til rapport/ansøgning</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <h3>Ejendom & boligpræsentation</h3>
+          <p>Små, rolige videoer og billeder der viser omgivelser, beliggenhed og helhed — uden at blive “reklameagtigt”.</p>
+          <div class="mini">
+            <span class="chip">Stabilt look</span><span class="chip">Korte klip</span><span class="chip">SoMe-format</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <h3>Natur & friluft</h3>
+          <p>Dokumentation af stier, kyster, grønne områder og naturprojekter. Godt til foreninger, kommuner og studier.</p>
+          <div class="mini">
+            <span class="chip">Overblik</span><span class="chip">Før/efter</span><span class="chip">Formidling</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <h3>Special-opgaver</h3>
+          <p>Hvis du ikke ved hvad du skal bede om: beskriv behovet, så foreslår jeg en løsning og leverance.</p>
+          <div class="mini">
+            <span class="chip">Idé → plan</span><span class="chip">Fast pris eller time</span><span class="chip">Kort afklaring</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <h2>Sådan foregår det</h2>
+          <p class="lead">En enkel proces der gør det trygt — også hvis du aldrig har brugt drone før.</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <div class="num">1</div>
+          <div>
+            <b>Kort afklaring</b>
+            <p>Du beskriver stedet, formålet og hvornår. Jeg svarer med forslag til leverance og prisramme.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="num">2</div>
+          <div>
+            <b>Plan & sikkerhed</b>
+            <p>Jeg vurderer flyvning, rammer, hensyn og den praktiske plan. (Og siger nej, hvis det ikke kan gøres forsvarligt.)</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="num">3</div>
+          <div>
+            <b>Flyvning & optagelse</b>
+            <p>Effektivt på lokation med fokus på at få de billeder/data der faktisk løser din opgave.</p>
+          </div>
+        </div>
+
+        <div class="step reveal">
+          <div class="num">4</div>
+          <div>
+            <b>Levering</b>
+            <p>Du får materialet organiseret og redigeret (hvis aftalt), plus evt. kort/PDF eller kort rapport.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio -->
+  <section id="portfolio">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <h2>Cases / eksempler</h2>
+          <p class="lead">Lige nu er det “pladsholdere”. Når du har 3–6 opgaver, kan vi gøre det her til en super stærk case-sektion.</p>
+        </div>
+      </div>
+
+      <div class="gallery">
+        <div class="ph reveal">
+          <strong>Dokumentation</strong>
+          <span>Før/efter-billeder • fast vinkel • klar mappe-struktur</span>
+        </div>
+        <div class="ph reveal">
+          <strong>Inspektion</strong>
+          <span>Tage/solceller • detaljer • note/markering</span>
+        </div>
+        <div class="ph reveal">
+          <strong>Kort / GIS</strong>
+          <span>Oversigtskort • markeringer • eksport til PDF</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <h2>Om GisGO Drone</h2>
+          <p class="lead">
+            En rolig, professionel drone-service med fokus på kvalitet, sikkerhed og leverancer der kan bruges i praksis.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <article class="card reveal">
+          <h3>Certificering</h3>
+          <p><b>A1/A3</b> + <b>A2</b>. Jeg flyver inden for rammerne og planlægger ud fra opgaven og omgivelserne.</p>
+          <div class="mini">
+            <span class="chip">Sikkerhed</span><span class="chip">Planlægning</span><span class="chip">Struktureret</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <h3>Stil & finish</h3>
+          <p>Ikke “skrigende reklame”. Mere: rent, roligt, og med en ensartet æstetik.</p>
+          <div class="mini">
+            <span class="chip">Neutral farveprofil</span><span class="chip">Skærpet</span><span class="chip">Leveringsklart</span>
+          </div>
+        </article>
+
+        <article class="card reveal">
+          <h3>Hvem er det til?</h3>
+          <p>Private, små virksomheder, foreninger, studier — og alle der bare vil have styr på dokumentationen.</p>
+          <div class="mini">
+            <span class="chip">Små opgaver</span><span class="chip">Fleksibelt</span><span class="chip">København</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <h2>Kontakt</h2>
+          <p class="lead">Skriv kort hvad du vil have løst — jeg vender tilbage med spørgsmål + forslag til leverance og pris.</p>
+        </div>
+      </div>
+
+      <div class="contact reveal">
+        <div>
+          <h3 style="margin:0 0 8px;">Få et hurtigt tilbud</h3>
+          <p>
+            Det hjælper hvis du skriver: <b>lokation</b>, <b>formål</b>, <b>ønsket deadline</b> og om det er <b>billeder</b>, <b>video</b> eller <b>kort/GIS</b>.
+          </p>
+          <p class="fine">
+            TODO: Indsæt dine kontaktoplysninger her (mail/evt. Instagram/LinkedIn).
+            <br/>
+            Mail: <a href="mailto:dinmail@eksempel.dk?subject=Droneopgave%20—%20GisGO"><b>dinmail@eksempel.dk</b></a>
+          </p>
+        </div>
+
+        <!-- Form: fungerer uden backend via mailto (simpelt). 
+             Hvis du vil have “rigtig” formular, kan du senere koble Formspree/Netlify Forms på. -->
+        <form id="contactForm">
+          <div>
+            <label for="name">Navn</label>
+            <input id="name" name="name" placeholder="Dit navn" autocomplete="name" />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" placeholder="din@mail.dk" autocomplete="email" />
+          </div>
+          <div>
+            <label for="msg">Besked</label>
+            <textarea id="msg" name="msg" placeholder="Lokation, formål, deadline, og hvad du vil have leveret…"></textarea>
+          </div>
+          <button class="btn primary" type="submit">Send besked</button>
+          <div class="fine">Når du trykker send, åbner din mail-klient med en færdig besked.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div>© <span id="year"></span> GisGO Drone</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+          <a class="navlink" href="#top">Til toppen</a>
+          <!-- TODO: tilføj links hvis du vil -->
+          <!-- <a class="navlink" href="https://www.linkedin.com/in/..." target="_blank" rel="noreferrer">LinkedIn</a> -->
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('menu');
+    btn?.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? '✕' : '☰';
+    });
+    menu?.querySelectorAll('a')?.forEach(a => {
+      a.addEventListener('click', () => {
+        menu.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.textContent = '☰';
+      });
+    });
+
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          e.target.classList.add('show');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+
+    // Contact form -> mailto
+    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = (document.getElementById('name').value || '').trim();
+      const email = (document.getElementById('email').value || '').trim();
+      const msg = (document.getElementById('msg').value || '').trim();
+
+      const to = "dinmail@eksempel.dk"; // TODO: din mail
+      const subject = encodeURIComponent("Droneopgave — GisGO (" + (name || "Kontakt") + ")");
+      const body = encodeURIComponent(
+        "Navn: " + (name || "-") + "\n" +
+        "Email: " + (email || "-") + "\n\n" +
+        "Besked:\n" + (msg || "-") + "\n\n" +
+        "—\nSendt fra gisgo-siden"
+      );
+
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    });
+  </script>
+</body>
+</html>
