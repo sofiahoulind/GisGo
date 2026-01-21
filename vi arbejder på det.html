@@ -9,7 +9,6 @@
 
   <style>
     :root{
-      /* Farver inspireret af logoet (navy/teal/grå) */
       --bg: #f5f7f9;
       --card: #ffffff;
       --text: #0f2233;
@@ -34,9 +33,10 @@
       margin: 0;
       font-family: var(--font);
       color: var(--text);
-      background: radial-gradient(900px 500px at 20% 0%, rgba(43,111,132,0.12), transparent 55%),
-                  radial-gradient(900px 500px at 90% 10%, rgba(15,34,51,0.08), transparent 55%),
-                  var(--bg);
+      background:
+        radial-gradient(900px 500px at 20% 0%, rgba(43,111,132,0.12), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(15,34,51,0.08), transparent 55%),
+        var(--bg);
       line-height: 1.6;
     }
 
@@ -45,40 +45,11 @@
 
     .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
 
-    header{
-      padding: 28px 0 18px;
-    }
+    header{ padding: 26px 0 10px; }
 
     .top{
       display:flex; align-items:center; justify-content: space-between;
       gap: 16px;
-    }
-
-    .brand{
-      display:flex; align-items:center; gap: 14px;
-      min-width: 240px;
-    }
-
-    .brand img{
-      width: 54px; height: 54px;
-      object-fit: contain;
-      border-radius: 14px;
-      background: #fff;
-      border: 1px solid var(--line);
-      box-shadow: 0 10px 30px rgba(15,34,51,0.08);
-      padding: 6px;
-    }
-
-    .brand .name{
-      font-weight: 650;
-      letter-spacing: 0.2px;
-      font-size: 18px;
-      margin: 0;
-    }
-    .brand .sub{
-      margin: 2px 0 0;
-      color: var(--muted);
-      font-size: 13px;
     }
 
     nav{
@@ -90,26 +61,17 @@
       color: var(--muted);
       padding: 8px 10px;
       border-radius: 12px;
+      border: 1px solid transparent;
     }
     nav a:hover{
       color: var(--text);
-      background: rgba(255,255,255,0.65);
-      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.70);
+      border-color: var(--line);
       text-decoration: none;
     }
 
-    .hero{
-      padding: 26px 0 10px;
-    }
-
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 16px;
-      align-items: stretch;
-    }
     @media (max-width: 880px){
-      .heroGrid{ grid-template-columns: 1fr; }
+      .top{ flex-direction: column; align-items:flex-start; }
       nav{ justify-content: flex-start; }
     }
 
@@ -118,7 +80,48 @@
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 20px;
+      padding: 22px;
+    }
+
+    .hero{
+      padding: 14px 0 10px;
+    }
+
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+    @media (max-width: 920px){
+      .heroGrid{ grid-template-columns: 1fr; }
+    }
+
+    /* Logo bliver et tydeligt “brand-anker” */
+    .logoHero{
+      display:flex; align-items:center; gap: 16px;
+      margin-bottom: 14px;
+    }
+    .logoHero img{
+      width: 84px; height: 84px;
+      object-fit: contain;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 16px 40px rgba(15,34,51,0.12);
+      padding: 10px;
+    }
+    .logoText .name{
+      margin: 0;
+      font-weight: 750;
+      letter-spacing: 0.2px;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+    .logoText .sub{
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
     }
 
     h1{
@@ -127,7 +130,6 @@
       line-height: 1.1;
       letter-spacing: -0.4px;
     }
-
     .lead{
       margin: 0 0 16px;
       color: var(--muted);
@@ -137,7 +139,7 @@
 
     .actions{
       display:flex; gap: 12px; flex-wrap: wrap;
-      margin-top: 8px;
+      margin-top: 10px;
     }
 
     .btn{
@@ -147,7 +149,7 @@
       border: 1px solid var(--line);
       background: #fff;
       color: var(--text);
-      font-weight: 600;
+      font-weight: 650;
       font-size: 14px;
     }
     .btn.primary{
@@ -168,12 +170,10 @@
       padding: 7px 10px;
       border-radius: 999px;
       font-size: 13px;
-      font-weight: 560;
+      font-weight: 600;
     }
 
-    section{
-      padding: 14px 0;
-    }
+    section{ padding: 14px 0; }
 
     h2{
       margin: 0 0 10px;
@@ -193,7 +193,7 @@
       display:flex; gap: 10px;
       align-items:flex-start;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,0.70);
+      background: rgba(255,255,255,0.72);
       border-radius: 14px;
       padding: 12px;
     }
@@ -209,10 +209,10 @@
     .item b{ display:block; font-size: 14px; }
     .item span{ display:block; color: var(--muted); font-size: 13px; margin-top: 2px; }
 
-    .sideNote{
-      background: linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+    .note{
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.62));
     }
-    .sideNote p{ margin: 0; color: var(--muted); font-size: 14px; }
+    .note p{ margin: 0; color: var(--muted); font-size: 14px; }
 
     .contact{
       border-left: 4px solid var(--teal);
@@ -224,7 +224,7 @@
       border-radius: 14px;
       border: 1px solid var(--line);
       background: #fff;
-      font-weight: 650;
+      font-weight: 750;
       text-decoration: none;
     }
     .contact a:hover{
@@ -246,17 +246,13 @@
   <header>
     <div class="wrap">
       <div class="top">
-        <div class="brand">
-          <!-- Læg dit logo i repo'et som "logo.png" -->
-          <img src="logo.png" alt="GisGO logo" />
-          <div>
-            <p class="name">GisGO</p>
-            <p class="sub">Droneopgaver • dokumentation • kort</p>
-          </div>
+        <div style="color:var(--muted); font-size:14px;">
+          Droneopgaver • dokumentation • kort
         </div>
 
         <nav aria-label="Navigation">
           <a href="#ydelser">Ydelser</a>
+          <a href="#arbejdsform">Arbejdsform</a>
           <a href="#rammer">Rammer</a>
           <a href="#kontakt">Kontakt</a>
         </nav>
@@ -268,13 +264,20 @@
     <div class="hero">
       <div class="heroGrid">
         <div class="card">
-          <h1>Droneoptagelser og dokumentation — med et professionelt workflow.</h1>
+          <div class="logoHero">
+            <img src="logo.png" alt="GisGO logo" />
+            <div class="logoText">
+              <p class="name">GisGO</p>
+              <p class="sub">Droneopgaver med fokus på dokumentation og anvendelige leverancer.</p>
+            </div>
+          </div>
+
+          <h1>Professionelle droneoptagelser — med klare leverancer.</h1>
           <p class="lead">
-            Jeg hjælper med droneopgaver, når du har brug for et klart visuelt overblik — til dokumentation, formidling eller kort.
+            Jeg hjælper, når du har brug for visuelt overblik fra luften: billeder, video og evt. kort/PDF efter aftale.
           </p>
 
           <div class="actions">
-            <!-- TODO: skift mailen til din rigtige -->
             <a class="btn primary" href="#kontakt">Kontakt</a>
             <a class="btn" href="#ydelser">Se ydelser</a>
           </div>
@@ -286,28 +289,28 @@
           </div>
         </div>
 
-        <aside class="card sideNote">
-          <h2 style="margin-top:0;">Kort fortalt</h2>
+        <aside class="card note">
+          <h2 style="margin-top:0;">Sådan arbejder jeg</h2>
           <ul class="list">
             <li class="item">
               <span class="dot" aria-hidden="true"></span>
               <div>
-                <b>Plan → flyvning → levering</b>
-                <span>Struktur fra start, så du får det materiale du skal bruge.</span>
+                <b>Afklaring af behov</b>
+                <span>En kort mail/telefon-afklaring af formål og ønsket leverance.</span>
               </div>
             </li>
             <li class="item">
               <span class="dot" aria-hidden="true"></span>
               <div>
-                <b>Rolig og seriøs tilgang</b>
-                <span>Fokus på sikkerhed, rammer og et ensartet visuelt udtryk.</span>
+                <b>Planlægning og rammer</b>
+                <span>Opgaven vurderes ud fra lokation, sikkerhed og gældende regler.</span>
               </div>
             </li>
             <li class="item">
               <span class="dot" aria-hidden="true"></span>
               <div>
-                <b>Levering i praktiske formater</b>
-                <span>Billeder/video + evt. kort/PDF efter aftale.</span>
+                <b>Levering</b>
+                <span>Materiale leveres organiseret — og redigeret, hvis det er en del af aftalen.</span>
               </div>
             </li>
           </ul>
@@ -337,7 +340,7 @@
             <span class="dot" aria-hidden="true"></span>
             <div>
               <b>Kort og formidling</b>
-              <span>Enkel kortproduktion/overblik, hvis materialet skal bruges i praksis.</span>
+              <span>Enkel kortproduktion/overblik, når materialet skal bruges i praksis.</span>
             </div>
           </li>
         </ul>
@@ -348,8 +351,8 @@
       <div class="card">
         <h2>Rammer</h2>
         <p class="lead" style="margin-bottom:0;">
-          Jeg er certificeret i <b>A1/A3</b> og <b>A2</b> og flyver inden for gældende regler.
-          Opgaver vurderes altid ift. lokation, sikkerhed og rammer.
+          Certificeret i <b>A1/A3</b> og <b>A2</b>. Opgaver gennemføres inden for gældende regler og vurderes altid ift.
+          lokation, sikkerhed og formål.
         </p>
       </div>
     </section>
@@ -358,15 +361,11 @@
       <div class="card contact">
         <h2>Kontakt</h2>
         <p>
-          Hvis du har en droneopgave, kan du skrive kort om <b>sted</b>, <b>formål</b> og <b>deadline</b> — så vender jeg tilbage.
+          Skriv gerne kort om <b>sted</b>, <b>formål</b> og <b>tidspunkt</b> — så vender jeg tilbage med næste skridt.
         </p>
 
         <!-- TODO: skift mailen til din rigtige -->
         <a href="mailto:dinmail@eksempel.dk?subject=Droneopgave%20—%20GisGO">dinmail@eksempel.dk</a>
-
-        <p style="margin-top:12px; font-size:13px;">
-          (CVR er ikke oprettet endnu.)
-        </p>
       </div>
     </section>
 
